@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Remindo_Home"
+    tools:context=".Activites.Remindo_Home"
     android:background="#1C1928">
 
     <TextView
@@ -43,11 +43,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip"
+        android:id="@+id/chipHigh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="High"
+        android:checkable="true"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:chipBackgroundColor="#37334C"
@@ -56,31 +57,34 @@
 
     </com.google.android.material.chip.Chip>
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip2"
+        android:id="@+id/chipMid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Mid"
         android:textColor="@color/white"
         android:textSize="14sp"
+        android:checkable="true"
         app:chipBackgroundColor="#37334C"
-        app:layout_constraintBottom_toBottomOf="@+id/chip"
-        app:layout_constraintStart_toEndOf="@+id/chip"
-        app:layout_constraintTop_toTopOf="@+id/chip">
+        app:layout_constraintBottom_toBottomOf="@+id/chipHigh"
+        app:layout_constraintStart_toEndOf="@+id/chipHigh"
+        app:layout_constraintTop_toTopOf="@+id/chipHigh">
 
     </com.google.android.material.chip.Chip>
 
     <com.google.android.material.chip.Chip
+        android:id="@+id/chipLow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Low"
         android:textColor="@color/white"
         android:textSize="14sp"
+        android:checkable="true"
         app:chipBackgroundColor="#37334C"
-        app:layout_constraintBottom_toBottomOf="@+id/chip2"
-        app:layout_constraintStart_toEndOf="@+id/chip2"
-        app:layout_constraintTop_toTopOf="@+id/chip2"
+        app:layout_constraintBottom_toBottomOf="@+id/chipMid"
+        app:layout_constraintStart_toEndOf="@+id/chipMid"
+        app:layout_constraintTop_toTopOf="@+id/chipMid"
         app:layout_constraintVertical_bias="0.0">
 
     </com.google.android.material.chip.Chip>
@@ -93,11 +97,11 @@
         android:text="Task"
         android:textColor="#9A9393"
         android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@+id/chip"
-        app:layout_constraintTop_toBottomOf="@+id/chip" />
+        app:layout_constraintStart_toStartOf="@+id/chipHigh"
+        app:layout_constraintTop_toBottomOf="@+id/chipHigh" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/taskNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -105,6 +109,7 @@
         android:backgroundTint="@color/teal_200"
         android:ems="10"
         android:hint="Name"
+        android:textColor="@color/white"
         android:inputType="textPersonName"
         android:textColorHint="#D2FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +117,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/taskDescriptionTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -120,54 +125,45 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="Description"
-        android:inputType="textMultiLine"
+        android:textColor="@color/white"
+        android:inputType="textLongMessage"
         android:textColorHint="#D1FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintEnd_toEndOf="@+id/taskNameTextView"
+        app:layout_constraintStart_toStartOf="@+id/taskNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/taskNameTextView" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Thu 25 May,2023"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintStart_toEndOf="@+id/button" />
+        app:layout_constraintBottom_toBottomOf="@+id/taskDurationButton"
+        app:layout_constraintStart_toEndOf="@+id/taskDurationButton" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="10:00 Am"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintStart_toEndOf="@+id/textView9" />
 
     <ImageButton
-        android:id="@+id/button"
+        android:id="@+id/taskDurationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#5078f1"
         android:padding="4dp"
         android:src="@drawable/clock"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintStart_toStartOf="@+id/taskDescriptionTextView"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionTextView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/saveNewTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Add"
         android:backgroundTint="#5078f1"
+        android:layout_marginTop="48dp"
+        android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

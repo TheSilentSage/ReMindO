@@ -12,13 +12,17 @@
         android:theme="@style/Theme.Remindo"
         tools:targetApi="31">
         <activity
-            android:name=".Remindo_Home"
+            android:name=".Activites.Remindo_Home"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activites.Add_New_Task"
+            android:exported="true">
         </activity>
     </application>
 
