@@ -2,8 +2,10 @@ package com.example.remindo.Activites;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.remindo.R;
 import com.example.remindo.ViewModels.RemindoViewModel;
+import com.example.remindo.database.RemindoFireBase;
 import com.google.android.material.chip.Chip;
 
 import java.text.ParseException;
@@ -25,8 +28,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Add_New_Task extends AppCompatActivity {
-    int priority = 0;
+    int priority = 3;
     RemindoViewModel remindoViewModel;
+    RemindoFireBase remindoFireBase;
     String datetime = "";
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -35,9 +39,11 @@ public class Add_New_Task extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_task_activity);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-
+        remindoFireBase = (RemindoFireBase) getIntent().getParcelableExtra("db");
 
         EditText taskNameTextView = findViewById(R.id.taskNameTextView);
         EditText taskDescriptionTextView = findViewById(R.id.taskDescriptionTextView);
@@ -49,6 +55,8 @@ public class Add_New_Task extends AppCompatActivity {
         Chip chipHigh = findViewById(R.id.chipHigh);
         Chip chipMid = findViewById(R.id.chipMid);
         Chip chipLow = findViewById(R.id.chipLow);
+
+        chipLow.setChecked(true);
 
         chipHigh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -115,7 +123,7 @@ public class Add_New_Task extends AppCompatActivity {
                                                                   int minute) {
                                                 datetime += " " + hourOfDay + ":" + minute;
                                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/M/yyyy hh:mm");
-                                                SimpleDateFormat displayFormat = new SimpleDateFormat("EEE dd MMM,yyyy hh:mm aa");
+                                                SimpleDateFormat displayFormat = new SimpleDateFormat("EEE dd MMM,yyyy   hh:mm aa");
 
                                                 Date day;
                                                 try {
@@ -147,11 +155,15 @@ public class Add_New_Task extends AppCompatActivity {
             public void onClick(View v) {
                 String taskName = taskNameTextView.getText().toString();
                 String taskDescription = taskDescriptionTextView.getText().toString();
-                String taskDuration = datetime;
-                remindoViewModel = new RemindoViewModel(priority,taskName,taskDescription,taskDuration,false);
-                Calendar calendar = Calendar.getInstance();
 
-                // Add To Firebase FireStore
+                remindoViewModel = new RemindoViewModel(priority,taskName,taskDescription,datetime,false);
+//                remindoViewModel = new RemindoViewModel(1,"Buy Milk","10 rs Milk packet short one","Wed 03 May,2023 11:22 AM",false);
+
+
+                remindoFireBase.addToFireBase(remindoViewModel);
+                Intent homeActivity = new Intent(Add_New_Task.this,Remindo_Home.class);
+                startActivity(homeActivity);
+                finish();
             }
         });
 

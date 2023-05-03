@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "387645295510",
+    "project_id": "remindo-1954b",
+    "storage_bucket": "remindo-1954b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387645295510:android:2146bb9b7c60597fc6abb7",
+        "android_client_info": {
+          "package_name": "com.example.remindo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387645295510-5nhgu4ab98d3ii30snp1sseeactvem51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXleuEjbyPFC3n0vZh4eGB-sMj5edUtsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387645295510-5nhgu4ab98d3ii30snp1sseeactvem51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

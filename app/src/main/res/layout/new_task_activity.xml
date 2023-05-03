@@ -48,6 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="High"
+        app:chipStrokeColor="@color/red"
+        app:chipStrokeWidth="1dp"
         android:checkable="true"
         android:textColor="@color/white"
         android:textSize="14sp"
@@ -65,6 +67,8 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:checkable="true"
+        app:chipStrokeColor="@color/orange"
+        app:chipStrokeWidth="1dp"
         app:chipBackgroundColor="#37334C"
         app:layout_constraintBottom_toBottomOf="@+id/chipHigh"
         app:layout_constraintStart_toEndOf="@+id/chipHigh"
@@ -81,6 +85,8 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:checkable="true"
+        app:chipStrokeColor="@color/yellow"
+        app:chipStrokeWidth="1dp"
         app:chipBackgroundColor="#37334C"
         app:layout_constraintBottom_toBottomOf="@+id/chipMid"
         app:layout_constraintStart_toEndOf="@+id/chipMid"
@@ -165,5 +171,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@drawable/small_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

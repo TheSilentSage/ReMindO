@@ -9,16 +9,27 @@ public class RemindoViewModel {
     int priority;
     String taskName;
     String taskDescription;
+//    String taskDuration = "Wed 03 May,2023 11:22 AM";
     String taskDuration;
-
     Boolean isDone;
+    Date endDate;
+    SimpleDateFormat parseFormat;
 
-    public RemindoViewModel(int priority, String taskName, String taskDescription,String taskDuration, Boolean isDone) {
+    public RemindoViewModel(){
+    };
+
+    public RemindoViewModel(int priority, String taskName, String taskDescription, String taskDuration, Boolean isDone) {
         this.priority = priority;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDuration = taskDuration;
         this.isDone = isDone;
+        parseFormat = new SimpleDateFormat("EEE dd MMM,yyyy hh:mm aa");
+        try {
+            endDate = parseFormat.parse(taskDuration);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public int getPriority() {
@@ -45,7 +56,13 @@ public class RemindoViewModel {
         this.taskDescription = taskDescription;
     }
     public String getTaskDuration() {
-        return taskDuration;
+        SimpleDateFormat parseFormat = new SimpleDateFormat("EEE, dd MMM");
+        return parseFormat.format(endDate) ;
+    }
+
+    public String getTaskTime() {
+        SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm aa");
+        return parseFormat.format(endDate) ;
     }
 
     public void setTaskDuration(String taskDuration) {
@@ -59,14 +76,9 @@ public class RemindoViewModel {
         isDone = done;
     }
 
-    public String getRemainingDuration(Date cal_date){
-        SimpleDateFormat parseFormat = new SimpleDateFormat("EEE dd MMM,yyyy hh:mm aa");
-        Date endDate = null;
-        try {
-            endDate = parseFormat.parse(taskDuration);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+    public String getRemainingDuration(){
+        Date cal_date = Calendar.getInstance().getTime();
+
         long different = endDate.getTime() - cal_date.getTime();
 
 

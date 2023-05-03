@@ -21,7 +21,7 @@
         android:id="@+id/ToDo_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -44,6 +44,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="48dp"
         android:text="Tasks"
+        android:fontFamily="@font/inter"
         android:textColor="@color/white"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -54,7 +55,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/inter"
         android:text="List"
         android:textColor="@color/white"
         android:textSize="32sp"
@@ -66,10 +68,27 @@
         android:id="@+id/add_todo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
         android:src="@drawable/round_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@drawable/small_line" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ToDo_recyclerview" />
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:srcCompat="@drawable/big_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
