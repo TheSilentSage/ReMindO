@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.remindo.R;
-import com.example.remindo.ViewModels.RemindoViewModel;
+import com.example.remindo.Models.RemindoModel;
 import com.example.remindo.database.RemindoFireBase;
 import com.google.android.material.chip.Chip;
 
@@ -29,7 +29,7 @@ import java.util.Date;
 
 public class Add_New_Task extends AppCompatActivity {
     int priority = 3;
-    RemindoViewModel remindoViewModel;
+    RemindoModel remindoModel;
     RemindoFireBase remindoFireBase;
     String datetime = "";
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -43,8 +43,8 @@ public class Add_New_Task extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
-        remindoFireBase = (RemindoFireBase) getIntent().getParcelableExtra("db");
-
+//        remindoFireBase = getIntent().getParcelableExtra("db");
+            remindoFireBase = new RemindoFireBase();
         EditText taskNameTextView = findViewById(R.id.taskNameTextView);
         EditText taskDescriptionTextView = findViewById(R.id.taskDescriptionTextView);
         ImageButton taskDurationButton = findViewById(R.id.taskDurationButton);
@@ -156,11 +156,11 @@ public class Add_New_Task extends AppCompatActivity {
                 String taskName = taskNameTextView.getText().toString();
                 String taskDescription = taskDescriptionTextView.getText().toString();
 
-                remindoViewModel = new RemindoViewModel(priority,taskName,taskDescription,datetime,false);
-//                remindoViewModel = new RemindoViewModel(1,"Buy Milk","10 rs Milk packet short one","Wed 03 May,2023 11:22 AM",false);
+               remindoModel = new RemindoModel(priority,taskName,taskDescription,datetime,false);
+//                remindoViewModel = new RemindoViewModel(1,"Buy Gold","10 rs Milk packet short one","Wed 03 May,2023 11:22 AM",false);
 
 
-                remindoFireBase.addToFireBase(remindoViewModel);
+                remindoFireBase.addToFireBase(remindoModel);
                 Intent homeActivity = new Intent(Add_New_Task.this,Remindo_Home.class);
                 startActivity(homeActivity);
                 finish();

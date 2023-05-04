@@ -11,11 +11,8 @@ import android.view.WindowManager;
 
 import com.example.remindo.R;
 import com.example.remindo.Adapter.RemindoAdapter;
-import com.example.remindo.ViewModels.RemindoViewModel;
 import com.example.remindo.database.RemindoFireBase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 public class Remindo_Home extends AppCompatActivity{
 
@@ -58,7 +55,7 @@ public class Remindo_Home extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intentNewToDo = new Intent(Remindo_Home.this,Add_New_Task.class);
-//                intentNewToDo.putExtra("db",remindoFireBase);
+                intentNewToDo.putExtra("db",remindoFireBase);
                 startActivity(intentNewToDo);
             }
         });

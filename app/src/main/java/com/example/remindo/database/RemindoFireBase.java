@@ -7,8 +7,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.remindo.Adapter.RemindoAdapter;
-import com.example.remindo.ViewModels.RemindoViewModel;
+import com.example.remindo.Models.RemindoModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,28 +25,25 @@ import java.util.List;
 
 public class RemindoFireBase implements Parcelable {
     String TAG = "FireBase";
-    FirebaseFirestore db;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference toDoCollectionReference;
     RemindoAdapter adapter;
     List<DocumentSnapshot> documentSnapshotList = new ArrayList<>();
+
     public RemindoFireBase(RemindoAdapter adapter) {
-        if(db==null){
-            db = FirebaseFirestore.getInstance();
-        }
         this.adapter = adapter;
         toDoCollectionReference = db.collection("Users")
                 .document("1")
                 .collection("ToDo");
 
-        toDoCollectionReference.orderBy("priority").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        toDoCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange dc : value.getDocumentChanges()) {
                     switch (dc.getType()) {
                         case MODIFIED:
                         case REMOVED:
-                            documentSnapshotList = value.getDocuments();
-                            adapter.notifyDataSetChanged();
+                            readFromFireBase();
                             break;
                     }
                 }
@@ -56,9 +54,6 @@ public class RemindoFireBase implements Parcelable {
     }
 
     protected RemindoFireBase(Parcel in) {
-        if(db==null){
-            db = FirebaseFirestore.getInstance();
-        }
         TAG = in.readString();
     }
 
@@ -74,13 +69,24 @@ public class RemindoFireBase implements Parcelable {
         }
     };
 
-    public void addToFireBase(RemindoViewModel rvm){
-        toDoCollectionReference
-                .add(rvm)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+    public RemindoFireBase() {
+
+    }
+
+    public void addToFireBase(RemindoModel rvm){
+        db.collection("Users")
+                .document("1")
+                .collection("ToDo")
+                 .add(rvm)
+                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println(e.getMessage());
                     }
                 });
     }
@@ -89,6 +95,7 @@ public class RemindoFireBase implements Parcelable {
         db.collection("Users")
                 .document("1")
                 .collection("ToDo")
+                .orderBy("done").orderBy("priority")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -99,6 +106,20 @@ public class RemindoFireBase implements Parcelable {
                 });
     }
 
+
+    public void updateFireBaseData(String id, RemindoModel rvm){
+        db.collection("Users")
+                .document("1")
+                .collection("ToDo")
+                .document(id)
+                .set(rvm)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        System.out.println("Done Update Sucess " + id + "  " + rvm.getDone());
+                    }
+                });
+    }
     public DocumentSnapshot getDocumentData(int pos){
         return documentSnapshotList.get(pos);
     }

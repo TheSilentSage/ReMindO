@@ -10,12 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.remindo.R;
-import com.example.remindo.ViewModels.RemindoViewModel;
+import com.example.remindo.Models.RemindoModel;
 import com.example.remindo.database.RemindoFireBase;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.util.ArrayList;
 
 public class RemindoAdapter extends RecyclerView.Adapter<RemindoAdapter.RemindoViewHolder> {
     RemindoFireBase remindoFireBase;
@@ -40,24 +38,33 @@ public class RemindoAdapter extends RecyclerView.Adapter<RemindoAdapter.RemindoV
     public void onBindViewHolder(@NonNull RemindoViewHolder holder, int position) {
 
         DocumentSnapshot documentSnapshot = remindoFireBase.getDocumentData(position);
-        RemindoViewModel remindoViewModel = documentSnapshot.toObject(RemindoViewModel.class);
+        RemindoModel remindoModel = documentSnapshot.toObject(RemindoModel.class);
 
-        holder.toDoTitleTextView.setText(remindoViewModel.getTaskName());
-        holder.toDoDescriptionTextView.setText(remindoViewModel.getTaskDescription());
-//        holder.toDoDateTextView.setText(remindoViewModel.getTaskDuration());
-//        holder.toDoTimeTextView.setText(remindoViewModel.getTaskTime());
-//        holder.toDoRemainingTimeTextView.setText(remindoViewModel.getRemainingDuration());
-        switch (remindoViewModel.getPriority()){
-            case 1:
-                holder.toDo_cardView.setStrokeColor(context.getColor(R.color.red));
-                break;
-            case 2:
-                holder.toDo_cardView.setStrokeColor(context.getColor(R.color.orange));
-                break;
-            case 3:
-                holder.toDo_cardView.setStrokeColor(context.getColor(R.color.yellow));
-                break;
-        }
+
+        holder.toDo_cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(!remindoModel.getDone()){
+                    remindoModel.setStroke(holder.toDo_cardView, context);
+                    remindoModel.setDone(true);
+                    remindoFireBase.updateFireBaseData(documentSnapshot.getId(), remindoModel);
+                }
+                else {
+                    remindoModel.setStroke(holder.toDo_cardView, context);
+                    remindoModel.setDone(false);
+                    remindoFireBase.updateFireBaseData(documentSnapshot.getId(), remindoModel);
+                }
+                return false;
+            }
+        });
+
+        holder.toDoTitleTextView.setText(remindoModel.getTaskName());
+        holder.toDoDescriptionTextView.setText(remindoModel.getTaskDescription());
+        holder.toDoDateTextView.setText(remindoModel.taskDate());
+        holder.toDoTimeTextView.setText(remindoModel.taskTime());
+        holder.toDoRemainingTimeTextView.setText(remindoModel.remainingDuration());
+        remindoModel.setStroke(holder.toDo_cardView,context);
+
     }
 
     @Override
